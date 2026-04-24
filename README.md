@@ -8,7 +8,7 @@ A lightweight, high-performance C driver for the DHT11 temperature and humidity 
 - **Float-free**: Handles integer and decimal parts separately to save memory and processing power.
 - **Checksum Validation**: Full data integrity verification for reliable readings.
 
-## 🛠 Hardware Connection
+## Hardware Connection
 The driver uses a single GPIO pin with a pull-up resistor. 
 
 | DHT11 Pin | MCXA153 Pin | Note |
@@ -42,7 +42,7 @@ This will generate the required macros in `pin_mux.h`:
 #define DHT11_INITPINS_DHT11_PIN 6U                   
 #define DHT11_INITPINS_DHT11_PIN_MASK (1U << 6U)
 ```
-## 💻 Usage
+## Usage
 
 1. **Pin Configuration**: Configure your pin in MCUXpresso Config Tools as a GPIO output/input.
 2. **Include**: Add `dht11_driver.c` and `dht11_driver.h` to your project.
