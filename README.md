@@ -18,12 +18,17 @@ The driver uses a single GPIO pin with a pull-up resistor.
 | **GND** | GND | Common ground |
 
 *Note: If you are using a DHT11 module (on a small PCB), the pull-up resistor is likely already included.*
+## Configuration & MCUXpresso Setup
 
-## ⚙️ Configuration & Pin Modification
+To ensure the driver works with your `pin_mux.c` configuration, set up the **Pins Tool** as follows:
 
-To make the driver work with your specific hardware setup, you must ensure that the following macros are defined (typically in `pin_mux.h` or at the top of your driver file). 
+1.  **Functional Group**: Create or use a group named `DHT11_InitPins`.
+2.  **Pin Identifier**: Set the label/identifier for P3_6 to `DHT11`.
+3.  **Electrical Settings**: 
+    - Direction: **Output**
+    - Input Buffer: **Enabled** (Crucial for reading data!)
 
-**If you change the pin, you must update the Port, Pin number, and Bit Mask accordingly:**
+This will generate the required macros in `pin_mux.h`:
 
 ```c
 /* Symbols to be used with GPIO driver */
