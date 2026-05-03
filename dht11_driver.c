@@ -7,7 +7,7 @@
 #define DHT11_GPIO DHT11_INITPINS_DHT11_GPIO
 #define DHT11_PIN_MASK DHT11_INITPINS_DHT11_GPIO_PIN_MASK
 
-int8_t DHT11_Get_Temperature_And_RH(uint8_t *temp_int,uint8_t *temp_dec,uint8_t *rh_int,uint8_t *rh_dec){
+int8_t DHT11_Get_Temperature_And_RH(uint8_t *temp_int,uint8_t *temp_dec,uint8_t *rh_int){
 
     uint32_t data = 0;
 
@@ -56,12 +56,11 @@ int8_t DHT11_Get_Temperature_And_RH(uint8_t *temp_int,uint8_t *temp_dec,uint8_t 
     }
 
     	*rh_int   = (uint8_t)(data >> 24);
-        *rh_dec   = (uint8_t)((data >> 20) & 0x0F);
         *temp_int = (uint8_t)(data >> 12);
         *temp_dec = (uint8_t)((data >> 8) & 0x0F);
 
 
-        if((uint8_t)(*rh_int + *rh_dec + *temp_int + *temp_dec) == (uint8_t)(data & 0xFF)) {return 1;}
+        if((uint8_t)(*rh_int + *temp_int + *temp_dec) == (uint8_t)(data & 0xFF)) {return 1;}
 
     return -1;
 }
