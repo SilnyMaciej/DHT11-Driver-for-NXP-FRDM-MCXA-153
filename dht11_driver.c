@@ -8,7 +8,8 @@
 #define DHT11_PIN_MASK DHT11_INITPINS_DHT11_GPIO_PIN_MASK
 
 int8_t DHT11_Get_Temperature_And_RH(uint8_t *temp_int,uint8_t *temp_dec,uint8_t *rh_int,uint8_t *rh_dec){
-    uint8_t data[5] = {0};
+
+    uint32_t data = 0;
 
     DHT11_GPIO->PDDR |= DHT11_PIN_MASK;
 
@@ -42,19 +43,25 @@ int8_t DHT11_Get_Temperature_And_RH(uint8_t *temp_int,uint8_t *temp_dec,uint8_t 
         delay_us(35U);
 
         if(DHT11_GPIO->PDIR & DHT11_PIN_MASK){
-            data[i / 8] |= (1U << (7U - (i % 8U)));
 
-            while(DHT11_GPIO->PDIR & DHT11_PIN_MASK){
-            	__asm("nop");
-            }
+        	if (i < 8)			 	data |= (1U << (31 - i));
+        	else if (i >= 12 && i < 24) data |= (1U << (35 - i));
+        	else if (i >= 28) 			data |= (1U << (39 - i));
+
+
+        	while(DHT11_GPIO->PDIR & DHT11_PIN_MASK){
+        		__asm("nop");
+        	}
         }
     }
-    if(((uint8_t)(*(data) + *(data + 1) + *(data + 2) + * (data + 3)) == *(data + 4))){
-        *rh_int = *data;
-        *rh_dec = *(data + 1);
-        *temp_int = *(data + 2);
-        *temp_dec = *(data + 3);
-        return 1;
-    }
+
+    	*rh_int   = (uint8_t)(data >> 24);
+        *rh_dec   = (uint8_t)((data >> 20) & 0x0F);
+        *temp_int = (uint8_t)(data >> 12);
+        *temp_dec = (uint8_t)((data >> 8) & 0x0F);
+
+
+        if((uint8_t)(*rh_int + *rh_dec + *temp_int + *temp_dec) == (uint8_t)(data & 0xFF)) {return 1;}
+
     return -1;
 }
