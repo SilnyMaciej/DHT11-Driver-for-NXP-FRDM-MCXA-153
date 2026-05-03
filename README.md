@@ -48,10 +48,10 @@ This will generate the required macros in `pin_mux.h`:
 2. **Include**: Add `dht11_driver.c` and `dht11_driver.h` to your project.
 3. **Read Data**:
 ```c
-uint8_t t_int, t_dec, rh_int, rh_dec;
+uint8_t t_int, t_dec, rh_int;
 
-if (DHT11_Get_Temperature_And_RH(&t_int, &t_dec, &rh_int, &rh_dec) == 1) {
-    PRINTF("Temp: %d.%d C, Humidity: %d.%d %%\r\n", t_int, t_dec, rh_int, rh_dec);
+if (DHT11_Get_Temperature_And_RH(&t_int, &t_dec, &rh_int) == 1) {
+    PRINTF("Temp: %d.%d C, Humidity: %d %%\r\n", t_int, t_dec, rh_int);
 } else {
     // Handle error (checksum or timeout)
 }
