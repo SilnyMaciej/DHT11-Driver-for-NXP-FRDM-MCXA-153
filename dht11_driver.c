@@ -17,10 +17,9 @@ int8_t DHT11_Get_Temperature_And_RH(uint8_t *temp_int,uint8_t *temp_dec,uint8_t 
 
     delay_us(18000U);
 
-    DHT11_GPIO->PSOR = DHT11_PIN_MASK;
+    DHT11_GPIO->PDDR &= ~DHT11_PIN_MASK;
     delay_us(30U);
 
-    DHT11_GPIO->PDDR &= ~DHT11_PIN_MASK;
 
     while(DHT11_GPIO->PDIR & DHT11_PIN_MASK){
     	__asm("nop");
@@ -45,9 +44,8 @@ int8_t DHT11_Get_Temperature_And_RH(uint8_t *temp_int,uint8_t *temp_dec,uint8_t 
 
         if(DHT11_GPIO->PDIR & DHT11_PIN_MASK){
 
-        	if (i < 8)			 	data |= (1U << (31 - i));
-        	else if (i >= 12 && i < 24) data |= (1U << (35 - i));
-        	else if (i >= 28) 			data |= (1U << (39 - i));
+        	if (i < 8) data |= (1U << (31 - i));
+        	else if (i >= 16) data |= (1U << (39 - i));
 
 
         	while(DHT11_GPIO->PDIR & DHT11_PIN_MASK){
