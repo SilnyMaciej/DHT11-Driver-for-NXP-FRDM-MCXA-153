@@ -44,8 +44,9 @@ int8_t DHT11_Get_Temperature_And_RH(uint8_t *temp_int,uint8_t *temp_dec,uint8_t 
 
         if(DHT11_GPIO->PDIR & DHT11_PIN_MASK){
 
-        	if (i < 8) data |= (1U << (31 - i));
-        	else if (i >= 16) data |= (1U << (39 - i));
+        	if (i < 8) 	 data |= (1U << (31 - i));
+
+        	else if (i >= 16)  data |= (1U << (39 - i));
 
 
         	while(DHT11_GPIO->PDIR & DHT11_PIN_MASK){
