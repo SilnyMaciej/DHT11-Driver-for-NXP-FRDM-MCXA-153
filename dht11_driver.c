@@ -11,9 +11,10 @@ int8_t DHT11_Get_Temperature_And_RH(uint8_t *temp_int,uint8_t *temp_dec,uint8_t 
 
     uint32_t data = 0;
 
+    DHT11_GPIO->PCOR = DHT11_PIN_MASK;
     DHT11_GPIO->PDDR |= DHT11_PIN_MASK;
 
-    DHT11_GPIO->PCOR = DHT11_PIN_MASK;
+
     delay_us(18000U);
 
     DHT11_GPIO->PSOR = DHT11_PIN_MASK;
