@@ -1,11 +1,6 @@
-#include <stdio.h>
-#include "board.h"
-#include "peripherals.h"
 #include "pin_mux.h"
-#include "delay_us.h"
+#include "dht11_driver.h"
 
-#define DHT11_GPIO DHT11_INITPINS_DHT11_GPIO
-#define DHT11_PIN_MASK DHT11_INITPINS_DHT11_GPIO_PIN_MASK
 
 uint32_t DHT11_Get_Temperature_And_RH(void){
 
@@ -55,7 +50,6 @@ uint32_t DHT11_Get_Temperature_And_RH(void){
         }
     }
 
-        if(((uint8_t)(data >> 24) + (uint8_t)(data >> 16)) + (uint8_t)((data >> 8)) == (uint8_t)(data & 0xFF)) {return data;}
+    return (((uint8_t)(data >> 24) + (uint8_t)(data >> 16)) + (uint8_t)((data >> 8)) == (uint8_t)(data & 0xFF)) ? data : 200;
 
-    return 200;
 }
