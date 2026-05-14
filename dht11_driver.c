@@ -18,18 +18,16 @@ uint32_t DHT11_Get_Temperature_And_RH(void){
     delay_us(42U);
 
     while(!(DHT11_GPIO->PDIR & DHT11_PIN_MASK)){
-    	 __asm("nop");
-
     	 if(--timeout == 0) return GND_ERROR;
+    	 __asm("nop");
     }
 
 
     timeout = DHT11_TIMEOUT_CYCLES;
 
     while(DHT11_GPIO->PDIR & DHT11_PIN_MASK){
-    	__asm("nop");
-
     	if(--timeout == 0) return VCC_ERROR;
+    	__asm("nop");
 
     }
 
@@ -40,9 +38,8 @@ uint32_t DHT11_Get_Temperature_And_RH(void){
     	timeout = DHT11_TIMEOUT_CYCLES;
 
     	while(!(DHT11_GPIO->PDIR & DHT11_PIN_MASK)){
-    		__asm("nop");
-
     		if(--timeout == 0) return GND_ERROR;
+    		__asm("nop");
     	 }
 
         delay_us(35U);
@@ -53,9 +50,8 @@ uint32_t DHT11_Get_Temperature_And_RH(void){
         timeout = DHT11_TIMEOUT_CYCLES;
 
         while(DHT11_GPIO->PDIR & DHT11_PIN_MASK){
-        	__asm("nop");
-
         	if(--timeout == 0) return VCC_ERROR;
+        	__asm("nop");
         }
 
 
